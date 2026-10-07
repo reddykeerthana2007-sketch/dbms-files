@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vehicle Service Centre Management System</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap">
+<style>
+:root{--bg:#EAEEF2;--pn:#fff;--tx:#1B2430;--mu:#5B6776;--ln:#D3DAE2;--sb:#1B2430;--ac:#F2B705;--ok:#1E8E5A;--wn:#B7791F;--er:#C0392B;--bl:#2B6CB0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151C;--pn:#18202B;--tx:#E6EBF1;--mu:#93A0B0;--ln:#2A3544;--sb:#0B0F14;--ok:#4FD08F;--wn:#E6B450;--er:#F07A6C;--bl:#6FB1F2}}
+:root[data-theme="dark"]{--bg:#10151C;--pn:#18202B;--tx:#E6EBF1;--mu:#93A0B0;--ln:#2A3544;--sb:#0B0F14;--ok:#4FD08F;--wn:#E6B450;--er:#F07A6C;--bl:#6FB1F2}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 Barlow,system-ui,sans-serif;display:flex;min-height:100%}
+nav{width:210px;background:var(--sb);color:#C9D2DD;padding:16px 0;flex-shrink:0;position:sticky;top:0;align-self:flex-start;height:100vh;overflow:auto}
+nav h1{font:700 19px/1.1 'Barlow Condensed',sans-serif;color:#fff;margin:0 16px 14px;letter-spacing:.3px}nav h1 small{display:block;color:var(--ac);font-size:12px;font-weight:600;margin-top:3px}
+nav a{display:block;padding:8px 16px;cursor:pointer;border-left:3px solid transparent;color:inherit}nav a:hover{background:#ffffff12}nav a.on{border-color:var(--ac);color:#fff;background:#ffffff14}
+nav button.rs{margin:14px 16px 0;background:none;border:1px solid #ffffff30;color:#9AA7B6;border-radius:3px;padding:5px 8px;cursor:pointer;font:inherit;font-size:12px}
+main{flex:1;min-width:0;padding:22px 26px 60px;max-width:1100px}
+h2{font:700 28px 'Barlow Condensed',sans-serif;margin:0 0 14px}h3{font:700 18px 'Barlow Condensed',sans-serif;margin:0 0 8px}h4{margin:14px 0 6px;font-size:14px;color:var(--mu)}
+.panel{background:var(--pn);border:1px solid var(--ln);border-radius:4px;padding:14px 16px;margin-bottom:16px}
+.form{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-top:8px}.form label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:3px;flex:1 1 150px}
+input,select{font:inherit;font-size:14px;padding:7px 8px;border:1px solid var(--ln);border-radius:3px;background:var(--bg);color:var(--tx);min-width:0}
+button{font:600 14px Barlow,sans-serif;background:var(--ac);color:#1B2430;border:0;border-radius:3px;padding:8px 14px;cursor:pointer}button.lnk{background:none;color:var(--bl);padding:2px 4px}
+:focus-visible{outline:2px solid var(--bl);outline-offset:1px}
+.tw{overflow-x:auto;background:var(--pn);border:1px solid var(--ln);border-radius:4px;margin-bottom:16px}table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--mu);font-size:12px;padding:8px 10px;border-bottom:1px solid var(--ln);white-space:nowrap}td{padding:8px 10px;border-bottom:1px solid var(--ln)}tr:last-child td{border:0}td.mt{color:var(--mu);text-align:center}
+.b{padding:2px 8px;border-radius:10px;font-size:12px;font-weight:600;white-space:nowrap;background:var(--bg);border:1px solid var(--ln)}.Completed,.Pass,.Paid,.Fully{color:var(--ok)}.Pending,.Booked,.Partial,.Unpaid{color:var(--wn)}.InProgress,.Inservice{color:var(--bl)}.Fail,.Needsattention{color:var(--er)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}.stats div{background:var(--pn);border:1px solid var(--ln);border-radius:4px;padding:12px 14px;border-top:3px solid var(--ac)}.stats b{display:block;font:700 30px 'Barlow Condensed',sans-serif}.stats span{color:var(--mu);font-size:13px}
+.flow{display:flex;flex-wrap:wrap;gap:0;margin:6px 0 4px}.flow span{background:var(--sb);color:#fff;padding:6px 12px 6px 18px;font-size:13px;font-weight:500;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);margin-right:-4px}.flow span:first-child{padding-left:12px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%)}
+pre{background:var(--sb);color:#DCE4EC;padding:10px 12px;border-radius:3px;font:12px/1.5 Consolas,monospace;overflow-x:auto;margin:6px 0 10px}.hd{display:flex;justify-content:space-between;align-items:center}.mu{color:var(--mu)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--sb);color:#fff;padding:10px 16px;border-radius:4px;border-left:4px solid var(--ok);opacity:0;pointer-events:none;transition:opacity .2s;z-index:9;max-width:90%}#toast.e{border-color:var(--er)}#toast.s{opacity:1}
+@media(max-width:800px){body{display:block}nav{width:100%;height:auto;position:static;display:flex;overflow-x:auto;padding:8px 0 0}nav h1,nav button.rs{display:none}nav a{white-space:nowrap;border-left:0;border-bottom:3px solid transparent;padding:8px 12px}nav a.on{border-color:var(--ac)}main{padding:16px 14px 60px}}
+</style></head><body>
+<nav id="nav"></nav><main id="m"></main><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),T=()=>new Date().toISOString().slice(0,10),inr=n=>'₹'+Number(n).toLocaleString('en-IN'),LAB=500;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function seed(){return{customers:[{id:'C001',name:'Rahul Kumar',phone:'9876543210',email:'rahul@gmail.com',address:'Hyderabad'},{id:'C002',name:'Priya Sharma',phone:'9123456780',email:'priya@gmail.com',address:'Hyderabad'},{id:'C003',name:'Anil Reddy',phone:'9988776655',email:'anil@gmail.com',address:'Warangal'}],
+vehicles:[{id:'V001',cid:'C001',plate:'TS09AB1234',brand:'Maruti',model:'Swift',type:'Car'},{id:'V002',cid:'C002',plate:'TS08CD5678',brand:'Honda',model:'City',type:'Car'},{id:'V003',cid:'C003',plate:'TS10EF9012',brand:'Royal Enfield',model:'Classic 350',type:'Bike'}],
+bookings:[{id:'B001',vid:'V001',date:'2026-09-18',sdate:'2026-09-20',stype:'General Service',status:'Completed'},{id:'B002',vid:'V002',date:'2026-09-25',sdate:'2026-09-28',stype:'Brake Repair',status:'In service'},{id:'B003',vid:'V003',date:'2026-09-30',sdate:'2026-10-03',stype:'Engine Check',status:'In service'},{id:'B004',vid:'V002',date:'2026-10-06',sdate:'2026-10-09',stype:'AC Repair',status:'Booked'}],
+jobs:[{id:'J001',bid:'B001',start:'2026-09-20',end:'2026-09-22',status:'Completed',remarks:'Routine service'},{id:'J002',bid:'B002',start:'2026-09-28',end:'',status:'Pending',remarks:'Waiting for parts'},{id:'J003',bid:'B003',start:'2026-10-03',end:'',status:'In Progress',remarks:'Chain and engine check'}],
+mechanics:[{id:'M001',name:'Arjun',phone:'9000000001',spec:'Engine'},{id:'M002',name:'Rahul',phone:'9000000002',spec:'Brakes'},{id:'M003',name:'Vikram',phone:'9000000003',spec:'Two-wheelers'}],
+tasks:[{id:'T001',jid:'J001',desc:'Engine oil and filter change',hours:1,mid:'M001',status:'Completed'},{id:'T002',jid:'J001',desc:'General inspection',hours:1,mid:'M001',status:'Completed'},{id:'T003',jid:'J002',desc:'Replace brake pads',hours:2,mid:'M002',status:'Pending'},{id:'T004',jid:'J003',desc:'Chain tune-up',hours:1,mid:'M003',status:'In Progress'}],
+parts:[{id:'P001',name:'Engine oil 5W-30 (1L)',qty:40,price:450},{id:'P002',name:'Oil filter',qty:25,price:180},{id:'P003',name:'Brake pad set',qty:4,price:1200},{id:'P004',name:'Air filter',qty:18,price:320},{id:'P005',name:'Spark plug',qty:6,price:150}],
+usage:[{id:'U001',jid:'J001',pid:'P001',qty:3},{id:'U002',jid:'J001',pid:'P002',qty:1},{id:'U003',jid:'J002',pid:'P003',qty:1}],
+inspections:[{id:'N001',jid:'J001',date:'2026-09-20',result:'Pass',notes:'All fluids OK'},{id:'N002',jid:'J002',date:'2026-09-28',result:'Needs attention',notes:'Brake pads worn'}],
+invoices:[{id:'INV001',jid:'J001',date:'2026-09-22',total:2530}],payments:[{id:'PAY001',iid:'INV001',date:'2026-09-22',amount:2530,mode:'UPI'}]}}
+let S;try{S=JSON.parse(localStorage.getItem('vscms'))}catch(e){}S=S||seed();let cur='dash',OJ=null;
+const save=()=>{try{localStorage.setItem('vscms',JSON.stringify(S))}catch(e){}};
+const by=(k,id)=>S[k].find(r=>r.id===id)||{};
+const nid=(k,p)=>p+String(Math.max(0,...S[k].map(r=>+r.id.replace(/\D/g,'')))+1).padStart(3,'0');
+const jv=j=>by('vehicles',by('bookings',j.bid).vid);
+const paid=id=>S.payments.filter(p=>p.iid===id).reduce((a,p)=>a+p.amount,0);
+const lab=(k,r)=>({customers:r.name,vehicles:r.plate+' · '+r.model,mechanics:r.name,bookings:r.id+' · '+by('vehicles',r.vid).plate,jobs:r.id+' · '+jv(r).plate,parts:r.name+' (stock '+r.qty+')',invoices:r.id+' · due '+inr(r.total-paid(r.id))})[k];
+const opts=(k,f)=>(f?S[k].filter(f):S[k]).map(r=>`<option value="${r.id}">${esc(lab(k,r))}</option>`).join('');
+const so=(a,v)=>a.map(s=>`<option ${s==v?'selected':''}>${s}</option>`).join('');
+const badge=v=>`<span class="b ${String(v).replace(/\W/g,'')}">${v}</span>`;
+const fmt=(k,v)=>k=='cid'?esc(by('customers',v).name):k=='vid'?by('vehicles',v).plate:k=='mid'?esc(by('mechanics',v).name||'Unassigned'):k=='price'?inr(v):k=='status'?badge(v):esc(v);
+const tbl=(h,r)=>`<div class=tw><table><thead><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${r.length?r.map(x=>`<tr>${x.map(c=>`<td>${c??''}</td>`).join('')}</tr>`).join(''):`<tr><td colspan=${h.length} class=mt>No records yet</td></tr>`}</tbody></table></div>`;
+function toast(m,e){const t=$('#toast');t.textContent=m;t.className='s'+(e?' e':'');clearTimeout(t.h);t.h=setTimeout(()=>t.className='',2600)}
+const E={
+customers:{t:'Customers',s:'customer',p:'C',f:[['name','Name','text',1],['phone','Phone (10 digits)','tel',1],['email','Email','email'],['address','Address','text']],v:r=>/^\d{10}$/.test(r.phone)?0:'Phone must be 10 digits'},
+vehicles:{t:'Vehicles',s:'vehicle',p:'V',f:[['cid','Owner','sel:customers',1],['plate','Registration no.','text',1],['brand','Brand','text',1],['model','Model','text',1],['type','Type','sel:Car,Bike,SUV,Truck']],v:r=>{r.plate=r.plate.toUpperCase().replace(/\s/g,'');return S.vehicles.some(v=>v.plate==r.plate)?'Registration number already exists':0}},
+bookings:{t:'Service bookings',s:'booking',p:'B',f:[['vid','Vehicle','sel:vehicles',1],['date','Booking date','date',1],['sdate','Service date','date',1],['stype','Service type','sel:General Service,Oil Change,Brake Repair,Engine Check,AC Repair']],x:['status'],d:{status:'Booked'},v:r=>r.sdate<r.date?'Service date cannot be before booking date':0},
+mechanics:{t:'Mechanics',s:'mechanic',p:'M',f:[['name','Name','text',1],['phone','Phone','tel'],['spec','Specialization','text']]},
+parts:{t:'Spare parts',s:'part',p:'P',f:[['name','Part name','text',1],['qty','Stock quantity','number',1],['price','Unit price (₹)','number',1]],v:r=>r.qty<0||r.price<=0?'Quantity must be 0 or more and price above 0':0}};
+const FK={customers:['vehicles','cid'],vehicles:['bookings','vid'],bookings:['jobs','bid'],mechanics:['tasks','mid'],parts:['usage','pid']};
+const inp=([k,l,t],p)=>t.startsWith('sel:')?`<label>${l}<select id="${p}${k}">${S[t.slice(4)]?opts(t.slice(4)):so(t.slice(4).split(','))}</select></label>`:`<label>${l}<input id="${p}${k}" type="${t}" ${t=='date'?`value="${T()}"`:''} ${t=='number'?'min=0':''}></label>`;
+function add(k){const e=E[k],r={id:nid(k,e.p)};for(const f of e.f){const v=$('#f_'+f[0]).value.trim();if(f[3]&&!v)return toast(f[1]+' is required',1);r[f[0]]=f[2]=='number'?+v:v}
+const er=e.v&&e.v(r);if(er)return toast(er,1);Object.assign(r,e.d);S[k].push(r);save();toast(`${e.s[0].toUpperCase()+e.s.slice(1)} ${r.id} saved`);go(cur)}
+function del(k,id){const f=FK[k];if(S[f[0]].some(r=>r[f[1]]==id))return toast(`Cannot delete ${id}: it is used in ${f[0]}`,1);S[k]=S[k].filter(r=>r.id!=id);save();toast(id+' deleted');go(cur)}
+function crud(k){const e=E[k],c=[...e.f.map(f=>f[0]),...(e.x||[])];return`<h2>${e.t}</h2><div class=panel><h3>Add ${e.s}</h3><div class=form>${e.f.map(f=>inp(f,'f_')).join('')}<button onclick="add('${k}')">Add ${e.s}</button></div></div>`+tbl(['ID',...e.f.map(f=>f[1].replace(/ \(.*/,'')),...(e.x||[]).map(()=>'Status'),''],S[k].map(r=>[r.id,...c.map(x=>fmt(x,r[x])),`<button class=lnk onclick="del('${k}','${r.id}')">Delete</button>`]))}
+function jobs(){const free=S.bookings.filter(b=>!S.jobs.some(j=>j.bid==b.id));
+return`<h2>Job cards</h2><div class=panel><h3>Create job card</h3><div class=form><label>Booking<select id=j_b>${opts('bookings',b=>free.includes(b))}</select></label><label>Remarks<input id=j_r></label><button onclick="addJob()">Create job card</button></div></div>`
++tbl(['Job','Vehicle','Service','Opened','Closed','Status','Tasks',''],S.jobs.map(j=>[j.id,jv(j).plate,by('bookings',j.bid).stype,j.start,j.end||'–',`<select onchange="jstat('${j.id}',this.value)">${so(['Pending','In Progress','Completed'],j.status)}</select>`,S.tasks.filter(t=>t.jid==j.id).length,`<button class=lnk onclick="OJ='${j.id}';go('jobs')">Open</button>`]))+(OJ?detail(by('jobs',OJ)):'')}
+function detail(j){const ts=S.tasks.filter(t=>t.jid==j.id),us=S.usage.filter(u=>u.jid==j.id),ins=S.inspections.filter(i=>i.jid==j.id);
+return`<div class=panel><div class=hd><h3>${j.id} · ${jv(j).plate} ${esc(jv(j).brand)} ${esc(jv(j).model)}</h3><button class=lnk onclick="OJ=null;go('jobs')">Close</button></div><p class=mu>${esc(j.remarks)}</p>
+<h4>Tasks and mechanic assignment</h4>`+tbl(['Task','Hours','Mechanic','Status'],ts.map(t=>[esc(t.desc),t.hours,fmt('mid',t.mid),`<select onchange="tstat('${t.id}',this.value)">${so(['Pending','In Progress','Completed'],t.status)}</select>`]))
++`<div class=form><label>Task<input id=t_d></label><label>Est. hours<input id=t_h type=number value=1 min=.5 step=.5></label><label>Mechanic<select id=t_m>${opts('mechanics')}</select></label><button onclick="addTask('${j.id}')">Add task</button></div>
+<h4>Spare parts used</h4>`+tbl(['Part','Qty','Unit price','Cost'],us.map(u=>{const p=by('parts',u.pid);return[esc(p.name),u.qty,inr(p.price),inr(p.price*u.qty)]}))
++`<div class=form><label>Part<select id=u_p>${opts('parts')}</select></label><label>Quantity<input id=u_q type=number value=1 min=1></label><button onclick="addUse('${j.id}')">Use part</button></div>
+<h4>Inspections</h4>`+tbl(['Date','Result','Notes'],ins.map(i=>[i.date,badge(i.result),esc(i.notes)]))
++`<div class=form><label>Result<select id=i_r>${so(['Pass','Needs attention','Fail'])}</select></label><label>Notes<input id=i_n></label><button onclick="addIns('${j.id}')">Record inspection</button></div></div>`}
+const locked=id=>by('jobs',id).status=='Completed'&&(toast('Job '+id+' is completed and locked',1),1);
+function addJob(){const b=$('#j_b').value;if(!b)return toast('No booking is waiting for a job card',1);const j={id:nid('jobs','J'),bid:b,start:T(),end:'',status:'Pending',remarks:$('#j_r').value.trim()};S.jobs.push(j);by('bookings',b).status='In service';OJ=j.id;save();toast('Job card '+j.id+' created');go('jobs')}
+function jstat(id,v){const j=by('jobs',id),ts=S.tasks.filter(t=>t.jid==id);if(v=='Completed'&&(!ts.length||ts.some(t=>t.status!='Completed'))){toast('Complete all tasks first (at least one task is needed)',1);return go('jobs')}
+j.status=v;j.end=v=='Completed'?T():'';by('bookings',j.bid).status=v=='Completed'?'Completed':'In service';save();toast(id+' is now '+v);go('jobs')}
+function addTask(id){if(locked(id))return;const d=$('#t_d').value.trim(),m=$('#t_m').value;if(!d)return toast('Task description is required',1);
+if(S.tasks.filter(t=>t.mid==m&&t.status!='Completed').length>=3)return toast(by('mechanics',m).name+' already has 3 open tasks',1);
+S.tasks.push({id:nid('tasks','T'),jid:id,desc:d,hours:+$('#t_h').value,mid:m,status:'Pending'});save();toast('Task assigned to '+by('mechanics',m).name);go('jobs')}
+function tstat(id,v){by('tasks',id).status=v;save();toast('Task '+id+': '+v)}
+function addUse(id){if(locked(id))return;const p=by('parts',$('#u_p').value),q=+$('#u_q').value;if(!(q>0))return toast('Enter a quantity above 0',1);if(q>p.qty)return toast(`Only ${p.qty} in stock for ${p.name}`,1);
+p.qty-=q;S.usage.push({id:nid('usage','U'),jid:id,pid:p.id,qty:q});save();toast(`${q} used, ${p.qty} left in stock`);go('jobs')}
+function addIns(id){if(locked(id))return;S.inspections.push({id:nid('inspections','N'),jid:id,date:T(),result:$('#i_r').value,notes:$('#i_n').value.trim()});save();toast('Inspection recorded');go('jobs')}
+const cost=id=>S.usage.filter(u=>u.jid==id).reduce((a,u)=>a+u.qty*by('parts',u.pid).price,0)+LAB*S.tasks.filter(t=>t.jid==id).length;
+function bill(){const rdy=S.jobs.filter(j=>j.status=='Completed'&&!S.invoices.some(i=>i.jid==j.id)),due=S.invoices.filter(i=>i.total>paid(i.id));
+return`<h2>Billing and payment</h2><div class=panel><h3>Generate invoice</h3><p class=mu>Total = parts used + ${inr(LAB)} labour per task. One invoice per completed job.</p><div class=form><label>Completed job<select id=b_j>${opts('jobs',j=>rdy.includes(j))}</select></label><button onclick="mkInv()">Generate invoice</button></div></div>
+<div class=panel><h3>Record payment</h3><div class=form><label>Invoice<select id=p_i>${opts('invoices',i=>due.includes(i))}</select></label><label>Amount (blank = full balance)<input id=p_a type=number min=1></label><label>Mode<select id=p_m>${so(['UPI','Cash','Card','Net Banking'])}</select></label><button onclick="pay()">Record payment</button></div></div>`
++tbl(['Invoice','Job','Vehicle','Date','Total','Paid','Balance','Status'],S.invoices.map(i=>{const p=paid(i.id),j=by('jobs',i.jid);return[i.id,i.jid,jv(j).plate,i.date,inr(i.total),inr(p),inr(i.total-p),badge(p>=i.total?'Paid':p?'Partial':'Unpaid')]}))
++'<h4>Payments</h4>'+tbl(['Payment','Invoice','Date','Amount','Mode'],S.payments.map(p=>[p.id,p.iid,p.date,inr(p.amount),p.mode]))}
+function mkInv(){const j=$('#b_j').value;if(!j)return toast('No completed job is waiting for an invoice',1);const i={id:nid('invoices','INV'),jid:j,date:T(),total:cost(j)};S.invoices.push(i);save();toast(`Invoice ${i.id}: ${inr(i.total)}`);go('bill')}
+function pay(){const id=$('#p_i').value;if(!id)return toast('No invoice has a balance due',1);const i=by('invoices',id),bal=i.total-paid(id),a=+$('#p_a').value||bal;if(a>bal)return toast('Amount exceeds balance of '+inr(bal),1);
+S.payments.push({id:nid('payments','PAY'),iid:id,date:T(),amount:a,mode:$('#p_m').value});save();toast('Payment of '+inr(a)+' recorded');go('bill')}
+function hist(){const q=($('#q')?.value||'').toUpperCase().replace(/\s/g,''),vs=S.vehicles.filter(v=>!q||v.plate.includes(q)||by('customers',v.cid).name.toUpperCase().includes(q));
+$('#hr').innerHTML=vs.map(v=>{const js=S.jobs.filter(j=>jv(j).id==v.id);return`<div class=panel><h3>${v.plate} · ${esc(v.brand)} ${esc(v.model)}</h3><p class=mu>Owner: ${esc(by('customers',v.cid).name)}</p>`+tbl(['Job','Service','Opened','Closed','Status','Tasks','Parts','Invoice'],js.map(j=>{const i=S.invoices.find(x=>x.jid==j.id);return[j.id,by('bookings',j.bid).stype,j.start,j.end||'–',badge(j.status),S.tasks.filter(t=>t.jid==j.id).map(t=>esc(t.desc)).join(', ')||'–',S.usage.filter(u=>u.jid==j.id).map(u=>by('parts',u.pid).name+' ×'+u.qty).join(', ')||'–',i?inr(i.total):'–']}))+'</div>'}).join('')||'<p class=mu>No vehicle matches that search.</p>'}
+function rep(){const days=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5),pj=S.jobs.filter(j=>j.status=='Pending'),cj=S.jobs.filter(j=>j.status=='Completed'),inv=S.invoices.reduce((a,i)=>a+i.total,0),col=S.payments.reduce((a,p)=>a+p.amount,0);
+const R=(t,q,h,r)=>`<div class=panel><h3>${t}</h3><pre>${q}</pre>${tbl(h,r)}</div>`;
+return'<h2>Reports</h2>'+R('Pending jobs',"SELECT * FROM Job_Card\nWHERE Status = 'Pending';",['Job','Booking','Status','Remarks'],pj.map(j=>[j.id,j.bid,badge(j.status),esc(j.remarks)]))
++R('Mechanic workload',"SELECT m.Name, COUNT(a.Assignment_ID) AS Total_Assignments\nFROM Mechanic m JOIN Assignment a\n  ON m.Mechanic_ID = a.Mechanic_ID\nGROUP BY m.Name;",['Mechanic','Total assignments'],S.mechanics.map(m=>[esc(m.name),S.tasks.filter(t=>t.mid==m.id).length]))
++R('Spare-part usage',"SELECT sp.Part_Name, SUM(pu.Quantity_Used) AS Total_Used\nFROM Spare_Part sp JOIN Part_Usage pu\n  ON sp.Part_ID = pu.Part_ID\nGROUP BY sp.Part_Name;",['Part','Total used'],S.parts.map(p=>[esc(p.name),S.usage.filter(u=>u.pid==p.id).reduce((a,u)=>a+u.qty,0)]).filter(r=>r[1]))
++R('Turnaround time',"SELECT JobCard_ID, DATEDIFF(Completion_Date, Start_Date)\nFROM Job_Card WHERE Status = 'Completed';",['Job','Vehicle','Days'],cj.map(j=>[j.id,jv(j).plate,days(j.start,j.end)]))
++R('Revenue',"SELECT SUM(Total_Amount) AS Total_Revenue FROM Invoice;",['Invoiced','Collected','Outstanding'],[[inr(inv),inr(col),inr(inv-col)]])}
+function dash(){const o=S.jobs.filter(j=>j.status!='Completed').length,low=S.parts.filter(p=>p.qty<10);
+return`<h2>Dashboard</h2><div class=stats><div><b>${S.customers.length}</b><span>Customers</span></div><div><b>${S.vehicles.length}</b><span>Vehicles</span></div><div><b>${o}</b><span>Open job cards</span></div><div><b>${inr(S.payments.reduce((a,p)=>a+p.amount,0))}</b><span>Collected</span></div></div>
+<div class=panel><h3>Service workflow</h3><div class=flow>${['Customer','Vehicle','Booking','Job card','Mechanic','Parts / Inspection','Invoice','Payment','History'].map(x=>`<span>${x}</span>`).join('')}</div></div>
+<div class=panel><h3>Low stock (under 10)</h3>`+tbl(['Part','In stock','Unit price'],low.map(p=>[esc(p.name),`<span class=Fail>${p.qty}</span>`,inr(p.price)]))+`</div>`}
+const NAV=[['dash','Dashboard'],['customers','Customers'],['vehicles','Vehicles'],['bookings','Bookings'],['jobs','Job cards'],['mechanics','Mechanics'],['parts','Spare parts'],['bill','Billing'],['hist','Service history'],['rep','Reports']];
+function go(v){cur=v;$('#nav').innerHTML='<h1>Vehicle Service Centre<small>Management System</small></h1>'+NAV.map(n=>`<a class="${n[0]==v?'on':''}" onclick="OJ=null;go('${n[0]}');scrollTo(0,0)">${n[1]}</a>`).join('')+'<button class=rs onclick="if(confirm(\'Reset all data to the sample records?\')){S=seed();save();OJ=null;go(\'dash\')}">Reset sample data</button>';
+const m=$('#m');m.innerHTML=E[v]?crud(v):{dash,jobs,bill,rep}[v]?{dash,jobs,bill,rep}[v]():`<h2>Service history</h2><div class=panel><div class=form><label>Search by registration number or owner<input id=q oninput="hist()" placeholder="e.g. TS09AB1234"></label></div></div><div id=hr></div>`;if(v=='hist')hist()}
+go('dash');
+</script></body></html>
